@@ -14,17 +14,36 @@
     "icon": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=200&q=80",
     "banner": "https://images.unsplash.com/photo-1593789382576-54f489cea51d?auto=format&fit=crop&w=1000&q=80",
     "description": "Reproductor oficial con calidad 4K, HDR y motor de renderizado ultra rápido. Inspirado en la mejor tecnología de streaming.",
-    "features": ["Soporte 4K nativo", "Subtítulos por IA", "Modo oscuro optimizado"],
-    "permissions": ["Almacenamiento", "Red", "Notificaciones"],
+    "features": [
+      "Soporte 4K nativo",
+      "Subtítulos por IA",
+      "Modo oscuro optimizado"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Red",
+      "Notificaciones"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 3.2: Añadido soporte para subtítulos generados por IA en tiempo real.",
     "reviews": [
-      {"author": "Marcela R.", "rating": 5, "comment": "La calidad 4K se ve increíble y no consume tanta batería.", "date": "Hace 2 días"},
-      {"author": "Iván T.", "rating": 4, "comment": "Muy buena app, a veces tarda en cargar los subtítulos.", "date": "Hace 5 días"}
-    ]
+      {
+        "author": "Marcela R.",
+        "rating": 5,
+        "comment": "La calidad 4K se ve increíble y no consume tanta batería.",
+        "date": "Hace 2 días"
+      },
+      {
+        "author": "Iván T.",
+        "rating": 4,
+        "comment": "Muy buena app, a veces tarda en cargar los subtítulos.",
+        "date": "Hace 5 días"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/iq-video-player.exe"
   },
   {
     "id": 2,
@@ -41,17 +60,37 @@
     "icon": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=200&q=80",
     "banner": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
     "description": "Sumérgete en el mundo distópico. RPG de acción de próxima generación con gráficos ultra realistas.",
-    "features": ["Mundo abierto", "Multijugador masivo", "Ray tracing móvil"],
-    "permissions": ["Almacenamiento", "Red", "Micrófono", "Notificaciones"],
+    "features": [
+      "Mundo abierto",
+      "Multijugador masivo",
+      "Ray tracing móvil"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Red",
+      "Micrófono",
+      "Notificaciones"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 2.1: Evento 'Neon Nights' activado con nuevas recompensas.",
     "reviews": [
-      {"author": "Danilo P.", "rating": 5, "comment": "El multijugador es adictivo, llevo semanas jugando.", "date": "Ayer"},
-      {"author": "Sofía M.", "rating": 5, "comment": "Los gráficos son impresionantes para ser móvil.", "date": "Hace 1 semana"}
-    ]
+      {
+        "author": "Danilo P.",
+        "rating": 5,
+        "comment": "El multijugador es adictivo, llevo semanas jugando.",
+        "date": "Ayer"
+      },
+      {
+        "author": "Sofía M.",
+        "rating": 5,
+        "comment": "Los gráficos son impresionantes para ser móvil.",
+        "date": "Hace 1 semana"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/cyber-clash-2077.exe"
   },
   {
     "id": 3,
@@ -68,15 +107,28 @@
     "icon": "https://images.unsplash.com/photo-1624696941338-934bf86ce3cb?auto=format&fit=crop&w=200&q=80",
     "banner": "",
     "description": "Libera memoria RAM y acelera tus juegos al máximo con un solo toque.",
-    "features": ["Limpieza profunda", "Modo Gaming", "Ahorro de batería"],
-    "permissions": ["Almacenamiento", "Acceso a apps instaladas"],
+    "features": [
+      "Limpieza profunda",
+      "Modo Gaming",
+      "Ahorro de batería"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Acceso a apps instaladas"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Mejoras de estabilidad y rendimiento.",
     "reviews": [
-      {"author": "Carlos G.", "rating": 4, "comment": "Funciona bien, mi teléfono va más fluido.", "date": "Hace 3 días"}
-    ]
+      {
+        "author": "Carlos G.",
+        "rating": 4,
+        "comment": "Funciona bien, mi teléfono va más fluido.",
+        "date": "Hace 3 días"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/neon-optimizer-pro.exe"
   },
   {
     "id": 4,
@@ -93,16 +145,29 @@
     "icon": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=200&q=80",
     "banner": "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=1000&q=80",
     "description": "Carreras arcade contrarreloj con circuitos que cambian en cada partida y control con un solo dedo.",
-    "features": ["Circuitos procedurales", "Modo torneo online", "Personalización de vehículos"],
-    "permissions": ["Almacenamiento", "Red"],
+    "features": [
+      "Circuitos procedurales",
+      "Modo torneo online",
+      "Personalización de vehículos"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Red"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 1.4: Nuevo modo torneo online con temporadas semanales.",
     "reviews": [
-      {"author": "Renata V.", "rating": 5, "comment": "Perfecto para partidas rápidas, muy fluido.", "date": "Hace 4 horas"}
-    ]
+      {
+        "author": "Renata V.",
+        "rating": 5,
+        "comment": "Perfecto para partidas rápidas, muy fluido.",
+        "date": "Hace 4 horas"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/rift-racers.exe"
   },
   {
     "id": 5,
@@ -119,15 +184,27 @@
     "icon": "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=200&q=80",
     "banner": "",
     "description": "Notas cifradas con sincronización local. Organiza ideas, listas y documentos sin conexión a internet.",
-    "features": ["Cifrado local", "Etiquetas y carpetas", "Modo sin conexión"],
-    "permissions": ["Almacenamiento"],
+    "features": [
+      "Cifrado local",
+      "Etiquetas y carpetas",
+      "Modo sin conexión"
+    ],
+    "permissions": [
+      "Almacenamiento"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 4.2: Corregido error al exportar notas largas.",
     "reviews": [
-      {"author": "Emilio S.", "rating": 5, "comment": "Justo lo que buscaba, sin anuncios molestos.", "date": "Hace 1 semana"}
-    ]
+      {
+        "author": "Emilio S.",
+        "rating": 5,
+        "comment": "Justo lo que buscaba, sin anuncios molestos.",
+        "date": "Hace 1 semana"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/vault-notes.exe"
   },
   {
     "id": 6,
@@ -144,16 +221,30 @@
     "icon": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=200&q=80",
     "banner": "https://images.unsplash.com/photo-1626814026160-2237a95fc5c0?auto=format&fit=crop&w=1000&q=80",
     "description": "Catálogo de doramas y series asiáticas con subtítulos en español y descarga para ver sin conexión.",
-    "features": ["Subtítulos en español", "Descargas offline", "Recomendaciones personalizadas"],
-    "permissions": ["Almacenamiento", "Red", "Notificaciones"],
+    "features": [
+      "Subtítulos en español",
+      "Descargas offline",
+      "Recomendaciones personalizadas"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Red",
+      "Notificaciones"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1626814026160-2237a95fc5c0?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 2.8: Nuevo catálogo de temporada añadido.",
     "reviews": [
-      {"author": "Paula N.", "rating": 5, "comment": "Excelente selección y buena calidad de video.", "date": "Hace 2 días"}
-    ]
+      {
+        "author": "Paula N.",
+        "rating": 5,
+        "comment": "Excelente selección y buena calidad de video.",
+        "date": "Hace 2 días"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/dorama-central.exe"
   },
   {
     "id": 7,
@@ -170,15 +261,27 @@
     "icon": "https://images.unsplash.com/photo-1580327344181-c1163234e5a0?auto=format&fit=crop&w=200&q=80",
     "banner": "",
     "description": "Estrategia por turnos en pixel art. Construye tu reino y defiéndelo de invasiones.",
-    "features": ["Pixel art original", "Modo campaña", "Batallas por turnos"],
-    "permissions": ["Almacenamiento"],
+    "features": [
+      "Pixel art original",
+      "Modo campaña",
+      "Batallas por turnos"
+    ],
+    "permissions": [
+      "Almacenamiento"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1580327344181-c1163234e5a0?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 1.9: Balance de unidades y nuevo mapa 'Tierras Heladas'.",
     "reviews": [
-      {"author": "Bruno L.", "rating": 4, "comment": "Muy entretenido, aunque le falta más contenido.", "date": "Hace 1 semana"}
-    ]
+      {
+        "author": "Bruno L.",
+        "rating": 4,
+        "comment": "Muy entretenido, aunque le falta más contenido.",
+        "date": "Hace 1 semana"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/pixel-kingdoms.exe"
   },
   {
     "id": 8,
@@ -195,13 +298,20 @@
     "icon": "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=200&q=80",
     "banner": "https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?auto=format&fit=crop&w=1000&q=80",
     "description": "Temporizador Pomodoro con estadísticas de concentración y sonidos ambientales.",
-    "features": ["Técnica Pomodoro", "Sonidos ambientales", "Estadísticas semanales"],
-    "permissions": ["Notificaciones"],
+    "features": [
+      "Técnica Pomodoro",
+      "Sonidos ambientales",
+      "Estadísticas semanales"
+    ],
+    "permissions": [
+      "Notificaciones"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Lanzamiento inicial de Focus Timer.",
-    "reviews": []
+    "reviews": [],
+    "downloadUrl": "https://example.com/downloads/focus-timer.exe"
   },
   {
     "id": 9,
@@ -218,14 +328,28 @@
     "icon": "https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&w=200&q=80",
     "banner": "",
     "description": "Simulcast de anime con doblaje y subtítulos, listas de seguimiento y notificaciones de nuevos episodios.",
-    "features": ["Simulcast semanal", "Doblaje y subtítulos", "Lista de seguimiento"],
-    "permissions": ["Almacenamiento", "Red", "Notificaciones"],
+    "features": [
+      "Simulcast semanal",
+      "Doblaje y subtítulos",
+      "Lista de seguimiento"
+    ],
+    "permissions": [
+      "Almacenamiento",
+      "Red",
+      "Notificaciones"
+    ],
     "screenshots": [
       "https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&w=400&q=80"
     ],
     "updateNotes": "Versión 3.0: Rediseño del reproductor y nuevas notificaciones de estreno.",
     "reviews": [
-      {"author": "Katherine J.", "rating": 5, "comment": "Me avisa apenas sale un capítulo nuevo, genial.", "date": "Hace 3 días"}
-    ]
+      {
+        "author": "Katherine J.",
+        "rating": 5,
+        "comment": "Me avisa apenas sale un capítulo nuevo, genial.",
+        "date": "Hace 3 días"
+      }
+    ],
+    "downloadUrl": "https://example.com/downloads/anime-wave.exe"
   }
 ]
