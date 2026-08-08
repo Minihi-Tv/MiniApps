@@ -282,7 +282,7 @@ function openModal(id) {
                 <p>${app.developer}</p>
                 <div style="font-size:0.9rem; color:var(--text-muted); margin-top:5px;">${app.price || 'Gratis'} • ${app.size || ''} • v${app.version || '1.0'}</div>
                 <div class="modal-actions">
-                    <button class="btn-install ${installed ? 'done btn-uninstall' : ''}" id="installBtn" style="width: auto; min-width:200px; padding: 12px 24px; font-size:1rem;" onclick="event.stopPropagation(); installApp(this, ${id})">${installed ? 'Desinstalar' : 'Instalar en Windows'}</button>
+                    <button class="btn-install ${installed ? 'done' : ''}" id="installBtn" style="width: auto; min-width:200px; padding: 12px 24px; font-size:1rem;" onclick="event.stopPropagation(); downloadApp(this, ${id})">${installed ? 'Descargar de nuevo' : 'Descargar'}</button>
                     <button class="icon-btn ${fav ? 'active' : ''}" id="modalFavBtn" title="Favorito" onclick="toggleModalFav(${id})">
                         <svg viewBox="0 0 24 24"><path d="M12 21s-6.7-4.35-9.3-8.02C1 10.5 1.5 7 4.5 5.5c2.2-1.1 4.4-.3 5.9 1.4L12 8.5l1.6-1.6c1.5-1.7 3.7-2.5 5.9-1.4C22.5 7 23 10.5 21.3 12.98 18.7 16.65 12 21 12 21z"/></svg>
                     </button>
@@ -436,28 +436,21 @@ function closeModal() {
     document.body.style.overflow = 'auto';
 }
 
-/* ============ INSTALAR / DESINSTALAR ============ */
-function installApp(btn, id) {
-    if (btn.classList.contains('loading')) return;
-
-    if (isInstalled(id)) {
-        setInstalled(id, false);
-        btn.classList.remove('done', 'btn-uninstall');
-        btn.innerText = 'Instalar en Windows';
-        showToast('App desinstalada', 'info');
+/* ============ DESCARGAR ============ */
+function downloadApp(btn, id) {
+    const app = appDatabase.find(a => a.id === id);
+    if (!app || !app.downloadUrl) {
+        showToast('Enlace de descarga no disponible', 'info');
         return;
     }
 
-    btn.classList.add('loading');
-    btn.innerText = 'Pendiente...';
-    setTimeout(() => { btn.innerText = 'Instalando... (45%)'; }, 1000);
-    setTimeout(() => {
-        btn.classList.remove('loading');
-        btn.classList.add('done', 'btn-uninstall');
-        btn.innerText = 'Desinstalar';
-        setInstalled(id, true);
-        showToast('Instalación completa', 'success');
-    }, 3000);
+    // Abre el enlace de descarga en una pestaña/página nueva
+    window.open(app.downloadUrl, '_blank', 'noopener');
+
+    setInstalled(id, true);
+    btn.classList.add('done');
+    btn.innerText = 'Descargar de nuevo';
+    showToast('Descarga iniciada en una nueva pestaña', 'success');
 }
 
 /* ============ EVENTOS GLOBALES ============ */
