@@ -1,1 +1,55 @@
-.
+[
+  {
+    "id": 1,
+    "name": "iQ Video Player",
+    "developer": "iQ Entertainment",
+    "category": "Entretenimiento",
+    "rating": "4.9",
+    "isNew": true,
+    "updateDate": "Hoy",
+    "icon": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=200&q=80",
+    "banner": "https://images.unsplash.com/photo-1593789382576-54f489cea51d?auto=format&fit=crop&w=1000&q=80",
+    "description": "Reproductor oficial con calidad 4K, HDR y motor de renderizado ultra rápido. Inspirado en la mejor tecnología de streaming.",
+    "features": ["Soporte 4K nativo", "Subtítulos por IA", "Modo oscuro optimizado"],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=400&q=80"
+    ],
+    "updateNotes": "Versión 3.2: Añadido soporte para subtítulos generados por IA en tiempo real."
+  },
+  {
+    "id": 2,
+    "name": "Cyber Clash 2077",
+    "developer": "GameStudio X",
+    "category": "Juegos",
+    "rating": "4.8",
+    "isNew": false,
+    "updateDate": "Hace 2 días",
+    "icon": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=200&q=80",
+    "banner": "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1000&q=80",
+    "description": "Sumérgete en el mundo distópico. RPG de acción de próxima generación con gráficos ultra realistas.",
+    "features": ["Mundo abierto", "Multijugador masivo", "Ray tracing móvil"],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80"
+    ],
+    "updateNotes": "Versión 2.1: Evento 'Neon Nights' activado con nuevas recompensas."
+  },
+  {
+    "id": 3,
+    "name": "Neon Optimizer Pro",
+    "developer": "TechTools",
+    "category": "Herramientas",
+    "rating": "4.5",
+    "isNew": false,
+    "updateDate": "Hace 1 semana",
+    "icon": "https://images.unsplash.com/photo-1624696941338-934bf86ce3cb?auto=format&fit=crop&w=200&q=80",
+    "banner": "",
+    "description": "Libera memoria RAM y acelera tus juegos al máximo con un solo toque.",
+    "features": ["Limpieza profunda", "Modo Gaming", "Ahorro de batería"],
+    "screenshots": [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80"
+    ],
+    "updateNotes": "Mejoras de estabilidad y rendimiento."
+  }
+]
