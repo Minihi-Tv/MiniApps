@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iQ Store | App Market</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0c10'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial' font-weight='900' fill='%2300E359' text-anchor='middle'%3EiQ%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,14 +12,18 @@
     <!-- Cabecera estilo Play Store -->
     <header>
         <div class="logo" onclick="location.reload()">iQ<span>Store</span></div>
-        
-        <div class="search-container">
+
+        <div class="search-container" id="searchContainer">
             <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             <input type="text" id="searchInput" placeholder="Buscar aplicaciones y juegos...">
+            <svg class="search-close-icon" id="searchCloseIcon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </div>
 
         <div class="header-actions">
-            <div class="bell-icon" onclick="toggleNotifications()">
+            <div class="search-toggle-icon" id="searchToggleIcon">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+            <div class="bell-icon" id="bellIcon" onclick="toggleNotifications()">
                 <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
                 <div class="bell-badge" id="bellBadge"></div>
             </div>
@@ -38,12 +43,20 @@
         <button class="tab-btn" data-target="Juegos">Juegos</button>
         <button class="tab-btn" data-target="Entretenimiento">Apps</button>
         <button class="tab-btn" data-target="Herramientas">Herramientas</button>
+        <button class="tab-btn" data-target="Favoritos">Favoritos <span id="favCount" class="fav-count"></span></button>
     </nav>
 
     <!-- Contenedor Principal donde se inyecta el contenido -->
     <main id="mainContainer">
         <!-- Loader inicial -->
-        <div style="text-align:center; padding: 50px; color: var(--iqiyi-green);">Cargando tienda...</div>
+        <div class="skeleton-wrap">
+            <div class="skeleton-hero"></div>
+            <div class="skeleton-title"></div>
+            <div class="app-grid">
+                <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+                <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+            </div>
+        </div>
     </main>
 
     <!-- Modal Detalles App -->
@@ -53,6 +66,9 @@
             <div id="modalContentDynamic"></div>
         </div>
     </div>
+
+    <!-- Contenedor de notificaciones tipo toast -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- Script en archivo externo -->
     <script src="app.js"></script>
