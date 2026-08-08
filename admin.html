@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iQ Store | Panel de publicación</title>
+<style>
+:root {
+    --bg-main: #0b0c10; --bg-card: #1f2833; --bg-hover: #293441;
+    --green: #00E359; --green-hover: #00c24c; --text-main: #fff; --text-muted: #8b929a;
+    --border: #2a3644; --danger: #ff4d5e; --warn: #ffb020;
+}
+* { margin:0; padding:0; box-sizing:border-box; font-family: Roboto, Arial, sans-serif; }
+body { background:var(--bg-main); color:var(--text-main); padding:2rem; padding-bottom:6rem; }
+h1 { font-size:1.6rem; }
+h1 span { color:var(--green); }
+.top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:1.5rem; }
+.status { display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-muted); }
+.dot { width:10px; height:10px; border-radius:50%; background:var(--danger); }
+.dot.on { background:var(--green); }
+
+fieldset { border:1px solid var(--border); border-radius:12px; padding:1.2rem; margin-bottom:1.5rem; }
+legend { padding:0 8px; color:var(--green); font-weight:600; cursor:pointer; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+label { display:block; font-size:0.8rem; color:var(--text-muted); margin-bottom:4px; }
+input, select, textarea {
+    width:100%; background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+    color:var(--text-main); padding:9px 12px; font-size:0.9rem;
+}
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--green); }
+textarea { resize:vertical; min-height:60px; }
+.field { margin-bottom:12px; }
+.row { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+.checkbox-row { display:flex; align-items:center; gap:8px; }
+.checkbox-row input { width:auto; }
+
+button { cursor:pointer; border:none; border-radius:8px; padding:10px 18px; font-weight:600; font-size:0.9rem; transition:0.2s; }
+.btn-primary { background:var(--green); color:#000; }
+.btn-primary:hover { background:var(--green-hover); }
+.btn-secondary { background:var(--bg-hover); color:var(--text-main); }
+.btn-secondary:hover { background:var(--border); }
+.btn-danger { background:transparent; color:var(--danger); border:1px solid var(--danger); }
+.btn-danger:hover { background:var(--danger); color:#fff; }
+button:disabled { opacity:0.5; cursor:not-allowed; }
+
+.app-list { display:flex; flex-direction:column; gap:8px; max-height:420px; overflow-y:auto; }
+.app-row {
+    display:flex; align-items:center; gap:12px; background:var(--bg-card); border:1px solid var(--border);
+    border-radius:10px; padding:8px 12px;
+}
+.app-row img { width:42px; height:42px; border-radius:10px; object-fit:cover; flex-shrink:0; background:var(--bg-hover); }
+.app-row .info { flex:1; min-width:0; }
+.app-row .name { font-weight:600; font-size:0.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.app-row .meta { font-size:0.75rem; color:var(--text-muted); }
+.badge { font-size:0.7rem; padding:2px 8px; border-radius:10px; background:var(--bg-hover); color:var(--text-muted); }
+.badge.new { background:var(--green); color:#000; }
+.badge.pending { background:var(--warn); color:#000; }
+.app-row .actions { display:flex; gap:6px; }
+.icon-sm-btn { background:var(--bg-hover); color:var(--text-main); padding:6px 10px; border-radius:6px; font-size:0.75rem; }
+.icon-sm-btn:hover { background:var(--border); }
+
+.publish-bar {
+    position:fixed; bottom:0; left:0; width:100%; background:var(--bg-card); border-top:1px solid var(--border);
+    padding:14px 2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; z-index:50;
+}
+.publish-bar .msg { font-size:0.85rem; color:var(--text-muted); }
+.publish-bar .msg.dirty { color:var(--warn); }
+
+.toast-container { position:fixed; top:20px; right:20px; z-index:2000; display:flex; flex-direction:column; gap:10px; }
+.toast {
+    background:var(--bg-card); border:1px solid var(--border); color:var(--text-main); padding:12px 18px;
+    border-radius:10px; font-size:0.85rem; box-shadow:0 6px 20px rgba(0,0,0,0.5); max-width:320px;
+    animation:in 0.25s ease;
+}
+.toast.success { border-color:var(--green); }
+.toast.error { border-color:var(--danger); }
+@keyframes in { from{opacity:0; transform:translateY(-8px);} to{opacity:1; transform:translateY(0);} }
+.toast.fade { animation:out 0.3s ease forwards; }
+@keyframes out { to{opacity:0; transform:translateY(-8px);} }
+
+.help { font-size:0.75rem; color:var(--text-muted); margin-top:6px; line-height:1.4; }
+.warn-box { background:rgba(255,176,32,0.1); border:1px solid var(--warn); color:var(--warn); padding:10px 14px; border-radius:8px; font-size:0.8rem; margin-bottom:1rem; }
+</style>
+</head>
+<body>
+
+<div class="top">
+    <h1>iQ<span>Store</span> — Panel de publicación</h1>
+    <div class="status"><div class="dot" id="connDot"></div><span id="connText">Sin conectar</span></div>
+</div>
+
+<div class="warn-box">
+    Este panel guarda tu token de GitHub solo en el navegador de este dispositivo (localStorage), nunca se envía a ningún servidor propio. Aun así, usa un <strong>token de acceso granular</strong> limitado a este repositorio y con permiso únicamente de "Contents: Read and write". No compartas este archivo con el token cargado.
+</div>
+
+<fieldset>
+    <legend onclick="toggleSection('cfgBody')">⚙️ Conexión con GitHub</legend>
+    <div id="cfgBody">
+        <div class="grid">
+            <div class="field"><label>Usuario u organización</label><input id="cfgOwner" placeholder="ej: daniel-dev"></div>
+            <div class="field"><label>Repositorio</label><input id="cfgRepo" placeholder="ej: iq-store"></div>
+            <div class="field"><label>Rama</label><input id="cfgBranch" placeholder="main" value="main"></div>
+            <div class="field"><label>Ruta del archivo</label><input id="cfgPath" placeholder="database.json" value="database.json"></div>
+        </div>
+        <div class="field" style="margin-top:10px;">
+            <label>Token personal de GitHub</label>
+            <input id="cfgToken" type="password" placeholder="ghp_xxxxxxxxxxxx">
+            <div class="help">Créalo en GitHub → Settings → Developer settings → Fine-grained tokens, con acceso solo a este repositorio.</div>
+        </div>
+        <div class="row">
+            <button class="btn-secondary" onclick="saveConfig()">Guardar configuración</button>
+            <button class="btn-primary" onclick="testAndLoad()">Conectar y cargar apps</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>📱 Apps publicadas (<span id="appCount">0</span>)</legend>
+    <div class="app-list" id="appList"></div>
+</fieldset>
+
+<fieldset>
+    <legend id="formLegend">➕ Nueva app</legend>
+    <div class="grid">
+        <div class="field"><label>Nombre *</label><input id="fName" placeholder="Nombre de la app"></div>
+        <div class="field"><label>Desarrollador *</label><input id="fDeveloper" placeholder="Estudio o desarrollador"></div>
+        <div class="field"><label>Categoría *</label>
+            <select id="fCategory">
+                <option value="Juegos">Juegos</option>
+                <option value="Entretenimiento">Entretenimiento</option>
+                <option value="Herramientas">Herramientas</option>
+            </select>
+        </div>
+        <div class="field"><label>Calificación (0-5)</label><input id="fRating" type="number" min="0" max="5" step="0.1" value="4.5"></div>
+        <div class="field"><label>Precio</label><input id="fPrice" value="Gratis"></div>
+        <div class="field"><label>Versión</label><input id="fVersion" placeholder="1.0.0"></div>
+        <div class="field"><label>Tamaño</label><input id="fSize" placeholder="45 MB"></div>
+        <div class="field"><label>Descargas</label><input id="fDownloads" placeholder="10 K+"></div>
+        <div class="field"><label>Fecha de actualización</label><input id="fUpdateDate" placeholder="Hoy"></div>
+        <div class="field checkbox-row" style="align-self:end;"><input type="checkbox" id="fIsNew"><label style="margin:0;">Marcar como "Nuevo"</label></div>
+    </div>
+
+    <div class="field"><label>Ícono (URL) *</label><input id="fIcon" placeholder="https://..."></div>
+    <div class="field"><label>Banner (URL, opcional)</label><input id="fBanner" placeholder="https://..."></div>
+    <div class="field"><label>Capturas de pantalla (una URL por línea) *</label><textarea id="fScreenshots" placeholder="https://...&#10;https://..."></textarea></div>
+    <div class="field"><label>Enlace de descarga (URL) *</label><input id="fDownloadUrl" placeholder="https://..."></div>
+
+    <div class="field"><label>Descripción *</label><textarea id="fDescription" placeholder="Descripción de la app..."></textarea></div>
+    <div class="field"><label>Características (una por línea)</label><textarea id="fFeatures" placeholder="Modo oscuro&#10;Soporte 4K"></textarea></div>
+    <div class="field"><label>Permisos (uno por línea)</label><textarea id="fPermissions" placeholder="Almacenamiento&#10;Red"></textarea></div>
+    <div class="field"><label>Notas de actualización</label><textarea id="fUpdateNotes" placeholder="Qué cambió en esta versión..."></textarea></div>
+
+    <div class="row">
+        <button class="btn-primary" onclick="saveAppFromForm()" id="saveBtn">Guardar app en la lista</button>
+        <button class="btn-secondary" onclick="resetForm()">Cancelar / Limpiar</button>
+    </div>
+</fieldset>
+
+<div class="publish-bar">
+    <span class="msg" id="publishMsg">Sin cambios pendientes.</span>
+    <div class="row" style="margin:0;">
+        <input id="commitMsg" placeholder="Mensaje del commit (opcional)" style="min-width:260px;">
+        <button class="btn-primary" id="publishBtn" onclick="publishToGitHub()" disabled>🚀 Publicar en GitHub</button>
+    </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+let workingApps = [];
+let currentSha = null;
+let editingId = null;
+let dirty = false;
+
+/* ===== Configuración ===== */
+function loadConfig() {
+    const cfg = JSON.parse(localStorage.getItem('iqstore_admin_config') || '{}');
+    document.getElementById('cfgOwner').value = cfg.owner || '';
+    document.getElementById('cfgRepo').value = cfg.repo || '';
+    document.getElementById('cfgBranch').value = cfg.branch || 'main';
+    document.getElementById('cfgPath').value = cfg.path || 'database.json';
+    document.getElementById('cfgToken').value = localStorage.getItem('iqstore_admin_token') || '';
+}
+function saveConfig() {
+    const cfg = {
+        owner: document.getElementById('cfgOwner').value.trim(),
+        repo: document.getElementById('cfgRepo').value.trim(),
+        branch: document.getElementById('cfgBranch').value.trim() || 'main',
+        path: document.getElementById('cfgPath').value.trim() || 'database.json'
+    };
+    localStorage.setItem('iqstore_admin_config', JSON.stringify(cfg));
+    localStorage.setItem('iqstore_admin_token', document.getElementById('cfgToken').value.trim());
+    showToast('Configuración guardada en este navegador', 'success');
+}
+function getConfig() {
+    return {
+        owner: document.getElementById('cfgOwner').value.trim(),
+        repo: document.getElementById('cfgRepo').value.trim(),
+        branch: document.getElementById('cfgBranch').value.trim() || 'main',
+        path: document.getElementById('cfgPath').value.trim() || 'database.json',
+        token: document.getElementById('cfgToken').value.trim()
+    };
+}
+function toggleSection(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ===== Codificación UTF-8 <-> Base64 ===== */
+function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p1) => String.fromCharCode('0x' + p1)));
+}
+function b64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+
+/* ===== Conexión y carga ===== */
+function setConnected(ok, text) {
+    document.getElementById('connDot').classList.toggle('on', ok);
+    document.getElementById('connText').textContent = text;
+}
+
+async function testAndLoad() {
+    saveConfig();
+    const cfg = getConfig();
+    if (!cfg.owner || !cfg.repo || !cfg.token) {
+        showToast('Completa usuario, repositorio y token', 'error');
+        return;
+    }
+    setConnected(false, 'Conectando...');
+    try {
+        const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
+        const res = await fetch(url, {
+            headers: { 'Authorization': `token ${cfg.token}`, 'Accept': 'application/vnd.github+json' }
+        });
+        if (res.status === 401) throw new Error('Token inválido o sin permisos');
+        if (res.status === 404) throw new Error('No se encontró el archivo/repositorio (revisa owner, repo, rama y ruta)');
+        if (!res.ok) throw new Error(`Error ${res.status} al conectar con GitHub`);
+
+        const data = await res.json();
+        currentSha = data.sha;
+        const content = b64DecodeUnicode(data.content.replace(/\n/g, ''));
+        workingApps = JSON.parse(content);
+
+        setConnected(true, `Conectado a ${cfg.owner}/${cfg.repo}`);
+        dirty = false;
+        updatePublishBar();
+        renderAppList();
+        showToast(`Se cargaron ${workingApps.length} apps desde GitHub`, 'success');
+    } catch (err) {
+        setConnected(false, 'Sin conectar');
+        showToast(err.message, 'error');
+    }
+}
+
+/* ===== Lista de apps ===== */
+function renderAppList() {
+    const list = document.getElementById('appList');
+    document.getElementById('appCount').textContent = workingApps.length;
+    if (workingApps.length === 0) {
+        list.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">No hay apps cargadas todavía. Conecta con GitHub o crea una nueva app abajo.</p>`;
+        return;
+    }
+    list.innerHTML = workingApps.map(app => `
+        <div class="app-row">
+            <img src="${app.icon || ''}" alt="">
+            <div class="info">
+                <div class="name">${app.name} <span class="badge">${app.category}</span> ${app.isNew ? '<span class="badge new">NUEVO</span>' : ''}</div>
+                <div class="meta">${app.developer} · ${app.rating}★ · v${app.version || '1.0'}</div>
+            </div>
+            <div class="actions">
+                <button class="icon-sm-btn" onclick="editApp(${app.id})">Editar</button>
+                <button class="icon-sm-btn" onclick="duplicateApp(${app.id})">Duplicar</button>
+                <button class="icon-sm-btn" style="color:var(--danger);" onclick="deleteApp(${app.id})">Eliminar</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function nextId() {
+    return workingApps.length ? Math.max(...workingApps.map(a => a.id)) + 1 : 1;
+}
+
+/* ===== Formulario ===== */
+function fillForm(app) {
+    document.getElementById('fName').value = app.name || '';
+    document.getElementById('fDeveloper').value = app.developer || '';
+    document.getElementById('fCategory').value = app.category || 'Juegos';
+    document.getElementById('fRating').value = app.rating || '4.5';
+    document.getElementById('fPrice').value = app.price || 'Gratis';
+    document.getElementById('fVersion').value = app.version || '';
+    document.getElementById('fSize').value = app.size || '';
+    document.getElementById('fDownloads').value = app.downloads || '';
+    document.getElementById('fUpdateDate').value = app.updateDate || '';
+    document.getElementById('fIsNew').checked = !!app.isNew;
+    document.getElementById('fIcon').value = app.icon || '';
+    document.getElementById('fBanner').value = app.banner || '';
+    document.getElementById('fScreenshots').value = (app.screenshots || []).join('\n');
+    document.getElementById('fDownloadUrl').value = app.downloadUrl || '';
+    document.getElementById('fDescription').value = app.description || '';
+    document.getElementById('fFeatures').value = (app.features || []).join('\n');
+    document.getElementById('fPermissions').value = (app.permissions || []).join('\n');
+    document.getElementById('fUpdateNotes').value = app.updateNotes || '';
+}
+
+function resetForm() {
+    editingId = null;
+    document.getElementById('formLegend').textContent = '➕ Nueva app';
+    document.getElementById('saveBtn').textContent = 'Guardar app en la lista';
+    fillForm({});
+}
+
+function editApp(id) {
+    const app = workingApps.find(a => a.id === id);
+    if (!app) return;
+    editingId = id;
+    document.getElementById('formLegend').textContent = `✏️ Editando: ${app.name}`;
+    document.getElementById('saveBtn').textContent = 'Actualizar app en la lista';
+    fillForm(app);
+    window.scrollTo({ top: document.getElementById('formLegend').offsetTop - 20, behavior: 'smooth' });
+}
+
+function duplicateApp(id) {
+    const app = workingApps.find(a => a.id === id);
+    if (!app) return;
+    const copy = { ...app, id: nextId(), name: app.name + ' (copia)' };
+    workingApps.push(copy);
+    markDirty();
+    renderAppList();
+    showToast('App duplicada, edítala antes de publicar', 'success');
+}
+
+function deleteApp(id) {
+    const app = workingApps.find(a => a.id === id);
+    if (!app) return;
+    if (!confirm(`¿Eliminar "${app.name}" de la lista? Se quitará al publicar.`)) return;
+    workingApps = workingApps.filter(a => a.id !== id);
+    markDirty();
+    renderAppList();
+    if (editingId === id) resetForm();
+}
+
+function saveAppFromForm() {
+    const name = document.getElementById('fName').value.trim();
+    const developer = document.getElementById('fDeveloper').value.trim();
+    const icon = document.getElementById('fIcon').value.trim();
+    const description = document.getElementById('fDescription').value.trim();
+    const screenshots = document.getElementById('fScreenshots').value.split('\n').map(s => s.trim()).filter(Boolean);
+    const downloadUrl = document.getElementById('fDownloadUrl').value.trim();
+
+    if (!name || !developer || !icon || !description || screenshots.length === 0 || !downloadUrl) {
+        showToast('Completa los campos obligatorios (*)', 'error');
+        return;
+    }
+
+    const appData = {
+        id: editingId !== null ? editingId : nextId(),
+        name, developer,
+        category: document.getElementById('fCategory').value,
+        rating: document.getElementById('fRating').value || '4.5',
+        isNew: document.getElementById('fIsNew').checked,
+        updateDate: document.getElementById('fUpdateDate').value.trim() || 'Hoy',
+        version: document.getElementById('fVersion').value.trim() || '1.0.0',
+        size: document.getElementById('fSize').value.trim(),
+        downloads: document.getElementById('fDownloads').value.trim(),
+        price: document.getElementById('fPrice').value.trim() || 'Gratis',
+        icon,
+        banner: document.getElementById('fBanner').value.trim(),
+        description,
+        features: document.getElementById('fFeatures').value.split('\n').map(s => s.trim()).filter(Boolean),
+        permissions: document.getElementById('fPermissions').value.split('\n').map(s => s.trim()).filter(Boolean),
+        screenshots,
+        downloadUrl,
+        updateNotes: document.getElementById('fUpdateNotes').value.trim(),
+        reviews: editingId !== null ? (workingApps.find(a => a.id === editingId)?.reviews || []) : []
+    };
+
+    if (editingId !== null) {
+        workingApps = workingApps.map(a => a.id === editingId ? appData : a);
+        showToast('App actualizada en la lista (aún no publicada)', 'success');
+    } else {
+        workingApps.push(appData);
+        showToast('App añadida a la lista (aún no publicada)', 'success');
+    }
+
+    markDirty();
+    renderAppList();
+    resetForm();
+}
+
+/* ===== Publicar ===== */
+function markDirty() {
+    dirty = true;
+    updatePublishBar();
+}
+function updatePublishBar() {
+    const msg = document.getElementById('publishMsg');
+    const btn = document.getElementById('publishBtn');
+    if (dirty) {
+        msg.textContent = 'Tienes cambios sin publicar.';
+        msg.classList.add('dirty');
+        btn.disabled = false;
+    } else {
+        msg.textContent = 'Sin cambios pendientes.';
+        msg.classList.remove('dirty');
+        btn.disabled = true;
+    }
+}
+
+async function publishToGitHub() {
+    const cfg = getConfig();
+    if (!cfg.owner || !cfg.repo || !cfg.token) {
+        showToast('Completa la configuración de GitHub primero', 'error');
+        return;
+    }
+    if (currentSha === null) {
+        showToast('Primero conecta y carga las apps desde GitHub', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('publishBtn');
+    btn.disabled = true;
+    btn.textContent = 'Publicando...';
+
+    try {
+        const jsonStr = JSON.stringify(workingApps, null, 2) + '\n';
+        const encoded = b64EncodeUnicode(jsonStr);
+        const commitMessage = document.getElementById('commitMsg').value.trim() || `Actualizar catálogo (${workingApps.length} apps) desde el panel`;
+
+        const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
+        const res = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${cfg.token}`,
+                'Accept': 'application/vnd.github+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: commitMessage,
+                content: encoded,
+                sha: currentSha,
+                branch: cfg.branch
+            })
+        });
+
+        if (res.status === 409) throw new Error('El archivo cambió en GitHub desde tu última carga. Vuelve a conectar y cargar antes de publicar.');
+        if (res.status === 401) throw new Error('Token inválido o sin permisos de escritura');
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.message || `Error ${res.status} al publicar`);
+        }
+
+        const data = await res.json();
+        currentSha = data.content.sha;
+        dirty = false;
+        updatePublishBar();
+        document.getElementById('commitMsg').value = '';
+        showToast('¡Publicado en GitHub! Los cambios ya están en el repositorio.', 'success');
+    } catch (err) {
+        showToast(err.message, 'error');
+    } finally {
+        btn.textContent = '🚀 Publicar en GitHub';
+        btn.disabled = !dirty;
+    }
+}
+
+/* ===== Toasts ===== */
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add('fade');
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
+}
+
+/* ===== Init ===== */
+loadConfig();
+updatePublishBar();
+</script>
+</body>
+</html>
